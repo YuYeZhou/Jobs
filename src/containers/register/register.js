@@ -8,7 +8,6 @@ class Register extends React.Component{
     this.state = {
       type:'genius'
     }
-    this.Change = this.Change.bind(this)
   }
 
   render() {
