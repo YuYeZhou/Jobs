@@ -1,7 +1,14 @@
 import React from 'react'
 import Logo from '../../components/logo/logo'
 import { WhiteSpace, List, InputItem, Radio, Button } from 'antd-mobile'
+import { connect } from 'react-redux'
+import { register } from '../../redux/user.redux'
+import './register.css'
 
+@connect(
+  state => state.user,
+  {register}
+)
 class Register extends React.Component{
   constructor(props) {
     super(props)
@@ -11,17 +18,17 @@ class Register extends React.Component{
       repeatpwd: '',
       type: 'genius'
     }
-    this.hanleButton = this.hanleButton.bind(this)
+    this.handleRegister = this.handleRegister.bind(this)
   }
 
-  hanleChange(key, val) {
+  handleChange(key, val) {
     this.setState({
       [key]: val
     })
   }
 
-  hanleButton() {
-    console.log(this.state);    
+  handleRegister() {
+    this.props.register(this.state)
   }
 
   render() {
@@ -31,35 +38,35 @@ class Register extends React.Component{
         <Logo />
         <WhiteSpace />
         <List>
+          {this.props.msg?<p className="error-msg">{this.props.msg}</p>:null}
           <InputItem
-            onChange={(v) => this.hanleChange('user', v)}
+            onChange={(v) => this.handleChange('user', v)}
           >用户名</InputItem>
           <WhiteSpace />
           <InputItem
            type="password"
-           onChange={(v) => this.hanleChange('pwd', v)}
+           onChange={(v) => this.handleChange('pwd', v)}
           >密码</InputItem>
           <WhiteSpace />
           <InputItem
            type="password"
-           onChange={(v) => this.hanleChange('repeatpwd', v)}
+           onChange={(v) => this.handleChange('repeatpwd', v)}
           >确认密码</InputItem>
           <WhiteSpace />
           <RadioItem
-           onChange={() => this.hanleChange('type', 'genius')}
+           onChange={() => this.handleChange('type', 'genius')}
            checked={this.state.type === 'genius'}
           >牛人</RadioItem>
           <WhiteSpace />
           <RadioItem
-           onChange={() => this.hanleChange('type', 'boss')}
+           onChange={() => this.handleChange('type', 'boss')}
            checked={this.state.type === 'boss'}
           >BOSS</RadioItem>
           <WhiteSpace />
           <Button type="primary"
-            onClick={this.hanleButton}
+            onClick={this.handleRegister}
           >注册</Button>
         </List>
-        
       </div>
     )
   }
