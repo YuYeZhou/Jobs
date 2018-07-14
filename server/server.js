@@ -1,7 +1,11 @@
 const express = require('express')
 const userRouter = require('./user')
+const bodyParser = require('body-parser')
+const cookParser = require('cookie-parser')
 
 const app = express()
+app.use(cookParser())
+app.use(bodyParser.json())
 
 app.use('/user', userRouter)
 

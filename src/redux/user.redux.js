@@ -1,14 +1,15 @@
 import axios from "axios";
+import { getRedirectPath } from '../util'
 
 const REGITSER_SUCCESS = 'REGITSER_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 
 const initState = {
   isAuth: false,
+  redirectTo: '',
   msg: '',
   user: '',
   pwd: '',
-  repeatpwd: '',
   type: ''
 }
 
@@ -16,7 +17,7 @@ const initState = {
 export function user(state=initState, action) {
   switch (action.type) {
     case REGITSER_SUCCESS:
-      return {...state, msg: '', isAuth: true, ...action.data}
+      return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
     case ERROR_MSG:
       return {...state, msg: action.msg, isAuth: false}
     default:
@@ -40,7 +41,7 @@ export function register({user, pwd, repeatpwd, type}) {
     return errorMSG('密码和确认密码不一致')
   }
   return dispatch => (
-    axios.post('/user/register')
+    axios.post('/user/register', {user, pwd, type})
       .then(res => {
         if(res.status === 200 && res.data.code === 0){
           dispatch(registerSucceess({user, pwd, type}))
