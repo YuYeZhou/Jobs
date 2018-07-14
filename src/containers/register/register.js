@@ -4,7 +4,7 @@ import { WhiteSpace, List, InputItem, Radio, Button } from 'antd-mobile'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { register } from '../../redux/user.redux'
-import './register.css'
+import '../login_register.css'
 
 @connect(
   state => state.user,
