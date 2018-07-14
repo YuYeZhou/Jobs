@@ -3,6 +3,7 @@ import { getRedirectPath } from '../util'
 
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const REGITSER_SUCCESS = 'REGITSER_SUCCESS'
+const LOAD_DATA = 'LOAD_DATA'
 const ERROR_MSG = 'ERROR_MSG'
 
 const initState = {
@@ -10,7 +11,6 @@ const initState = {
   redirectTo: '',
   msg: '',
   user: '',
-  pwd: '',
   type: ''
 }
 
@@ -21,6 +21,8 @@ export function user(state=initState, action) {
       return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
     case REGITSER_SUCCESS:
       return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
+    case LOAD_DATA:
+      return {...state, ...action.data}
     case ERROR_MSG:
       return {...state, msg: action.msg, isAuth: false}
     default:
@@ -38,6 +40,10 @@ function registerSucceess(data) {
 
 function errorMSG(msg) {
   return { msg, type: ERROR_MSG }
+}
+
+export function loadData(data) {
+  return { data, type: LOAD_DATA }
 }
 
 export function login({user, pwd}) {
@@ -67,7 +73,7 @@ export function register({user, pwd, repeatpwd, type}) {
     axios.post('/user/register', {user, pwd, type})
       .then(res => {
         if(res.status === 200 && res.data.code === 0){
-          dispatch(registerSucceess({user, pwd, type}))
+          dispatch(registerSucceess({user, type}))
         }else{
           dispatch(errorMSG(res.data.msg))
         }

@@ -3,7 +3,7 @@ const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
 const Utils = require('utility')
-
+const _filter = {'pwd': 0, __v: 0}
 
 
 Router.get('/list', (req, res) =>{
@@ -15,13 +15,14 @@ Router.get('/list', (req, res) =>{
 
 Router.post('/login', (req, res) => {
   const { user, pwd } = req.body
-  User.findOne({user, pwd:Md5Pwd(pwd)}, {'pwd':0} ,(err, doc) => {
+  User.findOne({user, pwd:Md5Pwd(pwd)}, _filter ,(err, doc) => {
     if(err) {
       return res.json({ code: 1, msg: '后端出错了' })
     } 
     if(!doc) {
       return res.json({ code: 1, msg: '用户名或密码错误'})
     }
+    res.cookie('userid', doc._id)
     return res.json({ code: 0, data: doc})
   })
 })
@@ -32,19 +33,33 @@ Router.post('/register', (req, res) =>{
     if(doc) {
       return res.json({ code: 1, msg: '用户名重复' })
     }
-    User.create({ user, pwd: Md5Pwd(pwd), type }, (err, doc) => {
-      if(err) {
+    const userModel = new User({user, type, pwd: Md5Pwd(pwd)})
+    userModel.save((err, doc) => {
+      if(err){
         return res.json({ code: 1, msg: '后端出错了' })
       }
-      return res.json({ code: 0, data: doc })
+      const {user, type, _id} = doc
+      res.cookie('userid', doc._id)
+      return res.json({ code: 0, data: {user, type, _id} })
     })
   })
 })
 
-Router.get('/info', (req, res) => 
-  // 用户没有cookie
-  res.json({code:1})
-)
+Router.get('/info', (req, res) => {
+  const {userid} = req.cookies
+  if(!userid){
+    // 用户没有cookie
+    return res.json({code:1})
+  }
+  User.findOne({_id: userid}, _filter, (err, doc) => {
+    if(err) {
+      return res.json({ code: 1, msg: '后端出错了' })
+    }
+    if(doc) {
+      return res.json({ code: 0, data: doc})
+    }
+  })
+})
 
 function Md5Pwd(pwd) {
   const salt = 'I_am_good,,,,good~good~study---day--dayUPUP@#$%%%!$$'
