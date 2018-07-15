@@ -12,10 +12,11 @@ const models = {
     //头像
     'avatar': {'type': String},
     //个人简介或者职位简介
-    'title': {'type': String},
+    'position': {'type': String},
     // 如果你是boss 还有两个字段
     'company': {'type': String},
-    'money': {'type': String}
+    'salary': {'type': String},
+    'desc': {'type': String}
   },
   chat: {}
 }
