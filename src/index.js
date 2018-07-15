@@ -4,6 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import GeniusInfo from './containers/geniusinfo/geniusinfo'
 import BossInfo from './containers/bossinfo/bossinfo'
 import Login from './containers/login/login'
 import Register from './containers/register/register'
@@ -22,6 +23,7 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute />
+        <Route path='/geniusinfo' component={GeniusInfo}/>
         <Route path='/bossinfo' component={BossInfo}/>
         <Route path='/login' component={Login}/>
         <Route path='/register' component={Register}/>

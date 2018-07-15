@@ -1,14 +1,12 @@
 import axios from "axios";
 import { getRedirectPath } from '../util'
 
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
-const REGITSER_SUCCESS = 'REGITSER_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
 const ERROR_MSG = 'ERROR_MSG'
 
 const initState = {
-  isAuth: false,
   redirectTo: '',
   msg: '',
   user: '',
@@ -19,29 +17,18 @@ const initState = {
 export function user(state=initState, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
-      return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
-    case LOGIN_SUCCESS:
-      return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
-    case REGITSER_SUCCESS:
-      return {...state, msg: '', redirectTo: getRedirectPath(action.data), isAuth: true, ...action.data}
+      return {...state, msg: '', redirectTo: getRedirectPath(action.data), ...action.data}
     case LOAD_DATA:
       return {...state, ...action.data}
     case ERROR_MSG:
-      return {...state, msg: action.msg, isAuth: false}
+      return {...state, msg: action.msg }
     default:
       return state;
   }
 }
 
-function loginSucceess(data) {
-  return { data, type: LOGIN_SUCCESS}
-}
-
 function authSuccess (data) {
   return { data, type: AUTH_SUCCESS }
-}
-function registerSucceess(data) {
-  return { data, type: REGITSER_SUCCESS }
 }
 
 function errorMSG(msg) {
@@ -73,7 +60,7 @@ export function login({user, pwd}) {
     axios.post('/user/login', {user, pwd})
       .then(res => {
         if(res.status === 200 && res.data.code === 0){
-          dispatch(loginSucceess(res.data.data))
+          dispatch(authSuccess(res.data.data))
         }else{
           dispatch(errorMSG(res.data.msg))
         }
@@ -92,7 +79,7 @@ export function register({user, pwd, repeatpwd, type}) {
     axios.post('/user/register', {user, pwd, type})
       .then(res => {
         if(res.status === 200 && res.data.code === 0){
-          dispatch(registerSucceess({user, type}))
+          dispatch(authSuccess({user, type}))
         }else{
           dispatch(errorMSG(res.data.msg))
         }
