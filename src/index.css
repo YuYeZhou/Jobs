@@ -9,7 +9,7 @@
   width: 100%
 }
 
-.am-navbar{
+.fix-header, .am-navbar{
   position: fixed;
   top: 0;
   width: 100%
