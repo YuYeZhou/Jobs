@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import GeniusInfo from './containers/geniusinfo/geniusinfo'
 import BossInfo from './containers/bossinfo/bossinfo'
 import Login from './containers/login/login'
 import Register from './containers/register/register'
 import AuthRoute from './components/authroute/authroute'
+import Dashbroad from './components/dashbroad/dashbroad'
 import 'antd-mobile/dist/antd-mobile.css'
 import reducers from './reducer'
 
@@ -23,10 +24,13 @@ ReactDOM.render(
     <BrowserRouter>
       <div>
         <AuthRoute />
-        <Route path='/geniusinfo' component={GeniusInfo}/>
-        <Route path='/bossinfo' component={BossInfo}/>
-        <Route path='/login' component={Login}/>
-        <Route path='/register' component={Register}/>
+        <Switch>
+          <Route path='/geniusinfo' component={GeniusInfo}/>
+          <Route path='/bossinfo' component={BossInfo}/>
+          <Route path='/login' component={Login}/>
+          <Route path='/register' component={Register}/>
+          <Route component={Dashbroad}/>
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>),
