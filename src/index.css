@@ -6,11 +6,16 @@
 .am-tab-bar{
   position: fixed;
   bottom: 0;
-  width: 100%
+  width: 100%;
+  height:auto;
+  z-index: -1;
 }
 
 .fix-header, .am-navbar{
   position: fixed;
   top: 0;
   width: 100%
+}
+.page-content{
+	padding:45px 5px;
 }

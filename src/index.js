@@ -12,7 +12,7 @@ import AuthRoute from './components/authroute/authroute'
 import Dashbroad from './components/dashbroad/dashbroad'
 import 'antd-mobile/dist/antd-mobile.css'
 import reducers from './reducer'
-
+import './config'
 
 const store = createStore(reducers, compose(
   applyMiddleware(thunk),
