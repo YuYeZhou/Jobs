@@ -3,13 +3,10 @@ import { connect } from 'react-redux'
 import { NavBar } from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
 import Boss from '../boss/boss'
+import Genius from '../genuis/genuis'
 import { Switch, Route } from 'react-router-dom'
 import '../../index.css'
 
-
-function Genius() {
-  return <h2>牛人首页</h2>
-}
 function Msg() {
   return <h2>消息列表页面</h2>
 }
