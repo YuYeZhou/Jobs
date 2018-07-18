@@ -9,6 +9,7 @@ import BossInfo from './containers/bossinfo/bossinfo'
 import Login from './containers/login/login'
 import Register from './containers/register/register'
 import AuthRoute from './components/authroute/authroute'
+import Chat from './components/chat/chat'
 import Dashbroad from './components/dashbroad/dashbroad'
 import 'antd-mobile/dist/antd-mobile.css'
 import reducers from './reducer'
@@ -29,6 +30,7 @@ ReactDOM.render(
           <Route path='/bossinfo' component={BossInfo}/>
           <Route path='/login' component={Login}/>
           <Route path='/register' component={Register}/>
+          <Route path='/chat/:user' component={Chat}/>
           <Route component={Dashbroad}/>
         </Switch>
       </div>
