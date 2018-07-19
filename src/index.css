@@ -34,3 +34,7 @@
   bottom: 0;
   width: 100%
 }
+
+.am-navbar{
+  z-index: 99;
+}
