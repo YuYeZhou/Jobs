@@ -18,8 +18,6 @@ Router.get('/list', (req, res) =>{
 Router.get('/getmsglist', (req, res) => {
   const user = req.cookies.userid
   // {'$or' :[{from: user, to: user}]}
-  console.log(req.cookies);
-  
   User.find({}, (err, userdoc) => {
     let users = {}
     userdoc.forEach(v => {
