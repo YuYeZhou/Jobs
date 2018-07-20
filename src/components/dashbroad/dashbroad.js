@@ -6,6 +6,7 @@ import Boss from '../boss/boss'
 import Genius from '../genuis/genuis'
 import User from '../user/user'
 import { Switch, Route } from 'react-router-dom'
+import { getMsgList, recvMsg } from '.././../redux/chat.redux'
 import '../../index.css'
 
 function Msg() {
@@ -13,10 +14,15 @@ function Msg() {
 }
 
 @connect(
-  state => state
+  state => state,
+  {getMsgList, recvMsg}
 )
 class Dashbroad extends React.Component{
 
+  componentDidMount() {
+    this.props.getMsgList()
+    this.props.recvMsg()
+  }
   render() {
     const user = this.props.user
     const navList = [
