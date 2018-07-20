@@ -75,7 +75,7 @@ class Chat extends React.Component{
           ):(
             <List key={v._id}>
               <Item
-                extra={<img src={avatar} />}
+                extra={<img src={avatar} alt=""/>}
                 className='chat-me'
               >{v.content}</Item>
             </List>
@@ -92,6 +92,8 @@ class Chat extends React.Component{
               extra={
                 <div>
                   <span
+                    role="img"
+                    aria-label="Smile"
                     style={{marginRight:15}}
                     onClick={() => {
                       this.setState({
