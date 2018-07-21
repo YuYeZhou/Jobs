@@ -1,15 +1,13 @@
 import React from 'react'
-import io from 'socket.io-client'
 import { NavBar, Icon, List, InputItem, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '.././../redux/chat.redux'
+import { getMsgList, sendMsg, recvMsg, readMsg } from '.././../redux/chat.redux'
 import '../../index.css'
-import { getChatId } from '../../util';
-const socket = io('ws://localhost:9093')
+import { getChatId } from '../../util'
 
 @connect(
   state => state,
-  {getMsgList, sendMsg, recvMsg}
+  {getMsgList, sendMsg, recvMsg, readMsg}
 )
 class Chat extends React.Component{
   constructor(props) {
@@ -23,8 +21,11 @@ class Chat extends React.Component{
     if(!this.props.chat.chatmsg.length){
       this.props.getMsgList()
       this.props.recvMsg()
-    }
-    
+    }    
+  }
+  componentWillUnmount() {
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
   fixCarousel() {
     setTimeout(()=>{
@@ -105,7 +106,7 @@ class Chat extends React.Component{
                   <span onClick={() => this.hanleSubmit()}>发送</span>
                 </div>
             }
-            >信息</InputItem>
+            ></InputItem>
           </List>
           {this.state.showEmoji?<Grid
             data={emoji}
